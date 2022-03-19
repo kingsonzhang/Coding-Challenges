@@ -23,3 +23,41 @@ function nbDig(n, d){
     (i * i).toString().split("").forEach(x => x == d ? total++ : total);
   return total;
 }
+
+//Count the characters in a string
+function count (string){ 
+  let dictionary = {};
+  string.split("").map((character) => character in dictionary ? dictionary[character]++ : dictionary[character] = 1)
+  return dictionary;
+}
+
+//Create a multiplication table
+function multiplicationTable(size) {
+  let bigArray = [];
+  for (let i = 1; i <= size; i++){
+    let smallArray = [];
+    for (let j = 1; j <= size; j++){
+      smallArray.push(i * j);
+    }
+    bigArray.push(smallArray);
+  }
+  return bigArray;
+}
+
+//Convert only characters to numbers, remove all special character
+function alphabetPosition(text) {
+  return text.toUpperCase().split("").filter(x => x >= "A" && x <= "Z").map(x => x.charCodeAt() - 64).join(" ");
+}
+
+//Capitalize a book title
+function titleCase(title, minorWords){
+  if (title != ""){
+    const lowerTitle = title.toLowerCase().split(" ");
+    let lowerMinor = []
+    if (minorWords !== undefined)
+      lowerMinor = minorWords.toLowerCase().split(" ");
+    
+    return lowerTitle.map((word, index) => (lowerMinor.includes(word) && index != 0) ? word.toLowerCase(): word[0].toUpperCase() + word.substring(1)).join(" ");
+  }
+  return "";
+}
