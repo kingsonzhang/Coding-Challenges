@@ -61,3 +61,19 @@ function titleCase(title, minorWords){
   }
   return "";
 }
+
+//Sum numbers left and right of index in array and check if equal
+function findEvenIndex(arr){
+  for (let i = 0; i < arr.length; i++){
+    if (arr.slice(0, i).reduce((acc, x) => acc + x, 0) == arr.slice(i + 1).reduce((acc, x) => acc + x, 0))
+      return i;
+  }
+  return -1;
+}
+
+//Queue at self checkout fastest time given different amount of checkouts
+function queueTime(customers, n) {
+  let queue = new Array(n).fill(0); 
+  customers.forEach(x => queue[queue.indexOf(Math.min(...queue))] += x);
+  return Math.max(...queue);
+}
