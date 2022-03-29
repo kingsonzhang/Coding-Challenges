@@ -77,3 +77,8 @@ function queueTime(customers, n) {
   customers.forEach(x => queue[queue.indexOf(Math.min(...queue))] += x);
   return Math.max(...queue);
 }
+
+//Filter out array b from a
+function arrayDiff(a, b) {
+  return a.filter(x => !b.includes(x));
+}
