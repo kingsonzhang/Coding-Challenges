@@ -110,3 +110,25 @@ function streetFighterSelection(fighters, position, moves){
 function duplicateEncode(word){
   return word.toLowerCase().split("").map((letter, index, self) => self.indexOf(letter) == self.lastIndexOf(letter) ? "(" : ")").join("");
 }
+
+//Checking loterry winner if character is in string
+function bingo(ticket, win){
+  let count = 0;
+  ticket.forEach(
+    x => {
+      x[0].split("").map(character => character.charCodeAt(0)).includes(x[1]) ? count++ : count;
+    }
+  )
+  return count >= win ? "Winner!" : "Loser!"
+}
+
+//Find indexes of two numbers in array that add to target
+function twoSum(numbers, target) {
+  for (let i = 0; i < numbers.length - 1; i++) {
+    for (let j = i + 1; j < numbers.length; j++) {
+      if (numbers[i] + numbers[j] == target) {
+        return [i, j];
+      }
+    }
+  }
+}
