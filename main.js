@@ -132,3 +132,17 @@ function twoSum(numbers, target) {
     }
   }
 }
+
+//Convert binary to ASCII using regex
+function binaryToString(binary) {
+  return binary.replace(/[01]{8}/g, x => String.fromCharCode(parseInt(x, 2)));
+}
+
+//Reverse binary array every 8 bytes
+function dataReverse(data){
+  let reverse = [];
+  for (let i = 0; i < data.length; i + 8){
+    reverse.unshift(...data.splice(i, 8));
+  }
+  return reverse;
+}
