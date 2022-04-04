@@ -146,3 +146,41 @@ function dataReverse(data){
   }
   return reverse;
 }
+
+//Prime Number
+function prime(number){
+  for (let i = 2; i < Math.sqrt(number); i++)
+      if (number % i == 0)
+        return false;
+    return true;
+}
+
+//Add number into array so sum is a prime number
+function minimumNumber(numbers){
+  const sum = numbers.reduce((acc, x) => acc + x, 0);
+  let current = sum;
+  
+  function prime(number){
+    for (let i = 2; i < Math.sqrt(number); i++)
+      if (number % i == 0)
+        return false;
+    return true;
+  }
+  
+  while (!prime(current))
+    current++;
+  return current - sum;
+}
+
+//Increment string number at the end by one, do not change length of string number, and reappend to end
+function incrementString(strng){
+  let i = strng.length;
+  while (strng[i - 1] >= '0' && strng[i - 1] <= '9')
+    i--;
+  let text = strng.substring(0, i);
+  let original = strng.substring(i);
+  let update = (Number(original) + 1).toString();
+  while (update.length < original.length)
+    update = "0" + update;
+  return text + update;
+}
