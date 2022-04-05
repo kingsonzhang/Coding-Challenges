@@ -184,3 +184,54 @@ function incrementString(strng){
     update = "0" + update;
   return text + update;
 }
+
+//Take a string fraction and reduce it to mixed fraction form
+function mixedFraction(s){
+  const temp = s.split("/");
+  let numer = temp[0];
+  let denom = temp[1];
+  if (denom == 0)
+    throw new Error("Divided by Zero");
+  let whole = ((numer >= 0 && denom > 0) || (numer < 0 && denom < 0)) ? Math.floor(numer/denom) : Math.ceil(numer/denom);
+  numer = numer % denom;
+  let reduce = gcd(numer, denom);
+  if (numer == 0)
+    return whole.toString();
+  else if (whole != 0)
+    return `${whole} ${Math.abs(numer / reduce)}/${Math.abs(denom / reduce)}`;
+  else{
+    return ((numer > 0 && denom > 0) || (numer < 0 && denom < 0)) ? `${numer / reduce}/${denom / reduce}` : `-${Math.abs(numer / reduce)}/${Math.abs(denom / reduce)}`;
+  }
+  
+  
+  function gcd(a, b){
+    if (!b)
+      return a;
+    return gcd(b, a % b);
+  }
+}
+
+//Find if sum of divisors is a square
+function listSquared(m, n) {
+  let pair = [];
+  for (let start = m; start <= n; start++){
+    let divisors = findDivisors(start);
+    let sum = divisors.map(x => x * x).reduce((acc, x) => acc + x, 0);
+    if (Number.isInteger(Math.sqrt(sum)))
+      pair.push([start, sum]);
+  }
+  return pair;
+  
+  function findDivisors(number){
+    let divisors = [];
+    for (let i = 1; i < Math.sqrt(number); i++){
+      if (Number.isInteger(number / i)){
+        divisors.push(i);
+        divisors.push(number / i);
+      }
+    }
+    if (Number.isInteger(Math.sqrt(number)))
+      divisors.push(Math.sqrt(number));
+    return divisors;
+  }
+}
