@@ -247,3 +247,4 @@ function productFib(prod){
   return [Math.min(first, second), Math.max(first, second), first * second == prod];
 }
 
+//Unfortunately no code today. Tried 3 problems and couldn't figure them out
