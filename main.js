@@ -335,3 +335,80 @@ var whoEatsWho = function(zoo){
   actions.push(order.join(","));
   return actions;
 }
+
+//Return a sentence depending on the number of people in the array
+function likes(names) {
+  switch(names.length) {
+    case 0:
+      return 'no one likes this';
+    case 1:
+      return `${names[0]} likes this`;
+    case 2:
+      return `${names[0]} and ${names[1]} like this`;
+    case 3:
+      return `${names[0]}, ${names[1]} and ${names[2]} like this`;
+    default:
+      return `${names[0]}, ${names[1]} and ${names.length - 2} others like this`;
+  }
+}
+
+//Check if equal number of x's and o'x in string
+function XO(str) {
+  let dictionary = {};
+  str.toLowerCase().split("").forEach(x => x in dictionary ? dictionary[x] += 1 : dictionary[x] = 1);
+  return dictionary['x'] == dictionary['o'];
+}
+
+//See if function ends with given string
+function solution(str, ending){
+  return str.endsWith(ending);
+}
+
+//Find the instance of key that is odd in array
+function findOdd(A) {
+  let dictionary = {};
+  A.forEach(x => x in dictionary ? dictionary[x]++ : dictionary[x] = 1);
+  for (x in dictionary)
+    if (dictionary[x] % 2 == 1)
+      return Number(x);
+}
+
+//Loop through iterable and remove all instances of same element as preceding
+var uniqueInOrder=function(iterable){
+  let holder = [];
+  for (let i = 0; i < iterable.length; i++)
+    if (holder[holder.length - 1] != iterable[i])
+      holder.push(iterable[i])
+  return holder;
+}
+
+//Find opposite DNA pairs in a string
+function DNAStrand(dna){
+  const dictionary = {'A': 'T', 'T': 'A', 'C' : 'G', 'G' : 'C'};
+  return dna.split("").map(x => dictionary[x]).join("");
+}
+
+//Test example: accum("ZpglnRxqenU"), "Z-Pp-Ggg-Llll-Nnnnn-Rrrrrr-Xxxxxxx-Qqqqqqqq-Eeeeeeeee-Nnnnnnnnnn-Uuuuuuuuuuu"
+function accum(s) {
+	return s.split("").map((x, index) => x.toUpperCase() + x.toLowerCase().repeat(index)).join('-');
+}
+
+//Keep multiplying digits in number until number is single digit, return how many times
+function persistence(num) {
+  let count = 0;
+  let split = num.toString().split("");
+  while (split.length > 1){
+    count++;
+    split = split.reduce((acc, x) => acc *= Number(x) , 1).toString().split("");
+  }
+  return count;
+}
+
+//Concatenate strings in a array given amount of strings to concatenate, find longest string
+function longestConsec(strarr, k){
+  if (k > strarr.length || k <= 0)
+    return '';
+  const joined = strarr.map((x, index) => strarr.slice(index, index + k).join(""));
+  const lengths = joined.map(x => x.length);
+  return joined[lengths.indexOf(Math.max(...lengths))]
+}
