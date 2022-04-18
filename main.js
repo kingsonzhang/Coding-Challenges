@@ -444,3 +444,42 @@ function rot13(message){
   }
   return characters.join("");
 }
+
+//Convert seconds into HH:MM:SS
+function humanReadable (seconds) {
+  const hours = Math.floor(seconds / 3600).toString().padStart(2, '0');
+  const minutes = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0')
+  const second = (seconds % 60).toString().padStart(2, '0');
+  return `${hours}:${minutes}:${second}`;
+}
+
+//Return amount of valid smiley faces, without regex and with regex
+function countSmileys(arr){
+  const valid = [':', ';', '-', '~', ')', 'D'];
+  let count = 0;
+  for (let i = 0; i < arr.length; i++){
+    const split = arr[i].split("");
+    if (split.length < 4 && split.every(x => valid.includes(x))){
+      if ((split.includes(':') || split.includes(';')) && (split.includes(')') || split.includes('D')))
+        count++
+    }
+  }
+  console.log(arr)
+  return count;
+}
+
+function countSmileys(arr) {
+  return arr.reduce((acc, x) => acc + /^[:;][-~]?[)D]$/.test(x), 0);
+}
+
+//Return a sentence with all words greater than 5 characters reversed
+function spinWords(string){
+  return string.split(" ").map(x=>x.length>4? x.split("").reverse().join("") : x).join(" ")
+}
+
+//Find the odd/even one out
+function findOutlier(integers){
+  const odds = integers.filter(x => x % 2);
+  const evens = integers.filter(x => !(x % 2));
+  return odds.length == 1 ? odds[0] : evens[0];
+}
