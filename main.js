@@ -483,3 +483,22 @@ function findOutlier(integers){
   const evens = integers.filter(x => !(x % 2));
   return odds.length == 1 ? odds[0] : evens[0];
 }
+
+//Build an asterisk pyramid given how many floors
+function towerBuilder(nFloors){
+  let pyramid = [];
+  for (let i = 1; i <= nFloors; i++){
+    pyramid.push(' '.repeat(nFloors - i) + '*'.repeat(2*i - 1) + ' '.repeat(nFloors - i));
+  }
+  return pyramid;
+}
+
+//Morse Code decoder
+decodeMorse = function(morseCode){
+  return morseCode.trim().split("   ").map(x => x.split(" ").map(y => MORSE_CODE[y]).join("")).join(" ")
+}
+
+//String does not contain same character, uses Set as a dictionary
+function isIsogram(str){
+  return new Set(str.toLowerCase()).size == str.length;
+}
