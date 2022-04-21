@@ -540,3 +540,25 @@ function sortArray(array) {
   let odds = array.filter(x => x % 2).sort((a, b) => a - b);
   return array.map(x => (x % 2) ? odds.shift() : x);
 }
+
+//Remove extra number > n elements in an array without changing order
+function deleteNth(arr,n){
+  let cache = {};
+  return arr.filter(x =>{
+    cache[x] = (cache[x] || 0) + 1;
+    return cache[x] <= n;
+  })
+}
+
+//Sort by weight of a string number (add digits), and then by number alphabetically if weights are equal
+function orderWeight(strng) {
+  let orderPairs = [];
+  strng.split(" ").forEach(x => orderPairs.push([x, x.split("").reduce((acc, value) => acc + Number(value), 0)]))
+  return orderPairs.sort((a, b) => {
+      if (a[1] > b[1]) return 1;
+      if (a[1] < b[1]) return -1;
+      if (a[0] > b[0]) return 1;
+      if (a[0] < b[0]) return -1;
+    })
+    .map(x => x[0]).join(" ");
+}
