@@ -562,3 +562,57 @@ function orderWeight(strng) {
     })
     .map(x => x[0]).join(" ");
 }
+
+//Push all zeroes to the end of the array
+function moveZeros(arr) {
+  let temp = arr.filter(x => x !== 0);
+  while (temp.length < arr.length)
+    temp.push(0);
+  return temp;
+}
+
+//Sudoku board check
+function sudoku(){
+  function validSolution(board){
+    let squares = getSquares(board);
+    for (let x = 0; x < board.length; x++){
+      //0 Check
+      if (board[x].includes(0))
+        return false;
+      
+      //Row check
+      if (!unique(board[x]))
+        return false;
+      
+      //Column check
+      let column = [];
+      for (let y = 0; y < 9; y++)
+        column.push(board[x][y]);
+      if (!unique(column))
+        return false;
+      
+      //Squares check
+      if (!unique(squares[x]))
+        return false
+    }
+    return true;
+  }
+  
+  function unique(board){
+    return (new Set(board)).size == board.length;
+  }
+  
+  function getSquares(board){
+    let squares = [];
+    for (let rows = 0; rows < board.length; rows += 3){
+      for (let columns = 0; columns < board[rows].length; columns += 3){
+        let temp = [];
+        temp.push(...(board[rows].slice(columns, columns + 3)));
+        temp.push(...(board[rows + 1].slice(columns, columns + 3)));
+        temp.push(...(board[rows + 2].slice(columns, columns + 3)));
+        squares.push(temp);
+      }
+    }
+    return squares;
+  }
+}
