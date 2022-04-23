@@ -616,3 +616,51 @@ function sudoku(){
     return squares;
   }
 }
+
+//Find amount of characters are duplicates in string regardless of case
+function duplicateCount(text){
+  let dictionary = {};
+  text.toLowerCase().split("").map(x => x in dictionary ? dictionary[x]++ : dictionary[x] = 0);
+  return Object.values(dictionary).filter(x => x > 0).length;
+}
+
+//Sort characters alphabetically and remove duplicate characters
+function longest(s1, s2) {
+  return [...new Set(s1+s2)].sort().join("");
+}
+
+//Cypher to encrypt and decrypt string by odd and even indexes
+function encrypt(text, n){
+  function cypher(text){
+    const split = text.split("");
+    return split.filter((x, index) => index % 2).join("") + split.filter((x, index) => !(index % 2)).join("");
+  }
+
+  if (text == null)
+    return text;
+  for (let i = 0 ; i < n; i++)
+    text = cypher(text);
+  return text;
+}
+
+function decrypt(encryptedText, n){
+  function decypher(text){
+    const split = encryptedText.split("");
+    const front = split.slice(0, Math.floor(split.length / 2));
+    const back = split.slice(Math.floor(split.length / 2), split.length);
+    let string = [];
+    for (let i = 0; i < front.length; i++){
+      string.push(back[i]);
+      string.push(front[i]);
+    }
+    if (back.length > front.length)
+      string.push(back[back.length - 1]);
+    return string.join("");
+  }
+
+  if (encryptedText == null)
+    return encryptedText;
+  for (let i = 0; i < n; i++)
+    encryptedText = decypher(encryptedText);
+  return encryptedText;
+}
