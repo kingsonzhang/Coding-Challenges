@@ -733,3 +733,9 @@ var maxSequence = function(arr){
   }
   return maxSum;
 }
+
+//Return 5 without using any numbers or math/
+//Wow this one was clever
+function unusualFive(){
+  return "smart".length;
+}
