@@ -739,3 +739,10 @@ var maxSequence = function(arr){
 function unusualFive(){
   return "smart".length;
 }
+
+//Rule of divisibility by 13
+function thirt(n) {
+  const ORDER = [1, 10, 9, 12, 3, 4];
+  const next = n.toString().split("").reverse().map(Number).reduce((acc, x, index) => acc + x * ORDER[index % 6], 0);
+  return next == n ? n : thirt(next);
+}
