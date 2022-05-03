@@ -746,3 +746,14 @@ function thirt(n) {
   const next = n.toString().split("").reverse().map(Number).reduce((acc, x, index) => acc + x * ORDER[index % 6], 0);
   return next == n ? n : thirt(next);
 }
+
+//Convert to camelCase
+function toCamelCase(str){
+  let split = str.split(/[-_]+/);
+  for (let i = 1; i < split.length; i++){
+    let characters = split[i].split("");
+    characters[0] = characters[0].toUpperCase();
+    split[i] = characters.join("");
+  }
+  return split.join("");
+}
