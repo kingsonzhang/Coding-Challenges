@@ -839,3 +839,31 @@ function calc(expr){
   })
   return numbers.pop();
 }
+
+//Check to see how many cakes can be made with available ingredients and recipe
+function cakes(recipe, available){
+  if (Object.keys(recipe).every(x => x in available))
+    return Math.min(...Object.keys(recipe).map(x => Math.floor(available[x] / recipe[x])));
+  return 0;
+}
+
+//Generate a valid tweet given a sentence
+function generateHashtag (str){
+  if (str != ""){
+    let hashtag = "#" + str.split(" ").filter(x => x != "").map(x => x[0].toUpperCase() + x.slice(1)).join("");
+    if (hashtag.length > 1 && hashtag.length <= 140)
+      return hashtag;
+  }
+  return false;
+}
+
+//If string2 cannot be made from string1, return false
+function scramble(str1, str2) {
+  let dictionary = {};
+  for (let i = 0; i < str1.length; i++)
+    str1[i] in dictionary ? dictionary[str1[i]]++ : dictionary[str1[i]] = 1;
+  for (let i = 0; i < str2.length; i++)
+    if (!(--dictionary[str2[i]] >= 0))
+      return false;
+  return true;
+}
