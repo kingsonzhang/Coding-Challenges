@@ -1,2 +1,3 @@
 # Coding-Challenges
-JavaScript file of the code I completed in coding challenges
+Repository of all coding challenge problems I have finished.
+Includes fundamentals and specific algorithms

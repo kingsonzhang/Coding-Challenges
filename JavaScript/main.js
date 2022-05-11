@@ -1,0 +1,403 @@
+//Return a sentence with all words greater than 5 characters reversed
+function spinWords(string){
+  return string.split(" ").map(x=>x.length>4? x.split("").reverse().join("") : x).join(" ")
+}
+
+//Find the odd/even one out
+function findOutlier(integers){
+  const odds = integers.filter(x => x % 2);
+  const evens = integers.filter(x => !(x % 2));
+  return odds.length == 1 ? odds[0] : evens[0];
+}
+
+//Build an asterisk pyramid given how many floors
+function towerBuilder(nFloors){
+  let pyramid = [];
+  for (let i = 1; i <= nFloors; i++){
+    pyramid.push(' '.repeat(nFloors - i) + '*'.repeat(2*i - 1) + ' '.repeat(nFloors - i));
+  }
+  return pyramid;
+}
+
+//Morse Code decoder
+decodeMorse = function(morseCode){
+  return morseCode.trim().split("   ").map(x => x.split(" ").map(y => MORSE_CODE[y]).join("")).join(" ")
+}
+
+//String does not contain same character, uses Set as a dictionary
+function isIsogram(str){
+  return new Set(str.toLowerCase()).size == str.length;
+}
+
+//Change seconds into readable format
+function formatDuration (time){
+  if (time == 0)
+    return "now";
+  let array = [];
+  const years = Math.floor(time / 31536000);
+  if (years)
+    array.push(`${years} year${years > 1 ? 's' : ""}`);
+  const days = Math.floor((time % 31536000) / 86400);
+  if (days)
+    array.push(`${days} day${days > 1 ? 's' : ""}`);
+  const hours = Math.floor((time % 86400) / 3600);
+  if (hours)
+    array.push(`${hours} hour${hours > 1 ? 's' : ""}`);
+  const minutes = Math.floor((time % 3600) / 60);
+  if (minutes)
+    array.push(`${minutes} minute${minutes > 1 ? 's' : ""}`);
+  const seconds = time % 60;
+  if (seconds)
+    array.push(`${seconds} second${seconds > 1 ? 's' : ""}`);
+  
+  if (array.length == 1)
+    return array[0];
+  else if (array.length == 2)
+    return array.join(" and ");
+  else{
+    let noComma = array.pop();
+    noComma = array.pop() + " and " + noComma;
+    return array.join(", ") + ", " + noComma;
+  }
+}
+
+//Sort only the odds in ascending order, every even numbers remains in place in the array
+function sortArray(array) {
+  let odds = array.filter(x => x % 2).sort((a, b) => a - b);
+  return array.map(x => (x % 2) ? odds.shift() : x);
+}
+
+//Remove extra number > n elements in an array without changing order
+function deleteNth(arr,n){
+  let cache = {};
+  return arr.filter(x =>{
+    cache[x] = (cache[x] || 0) + 1;
+    return cache[x] <= n;
+  })
+}
+
+//Sort by weight of a string number (add digits), and then by number alphabetically if weights are equal
+function orderWeight(strng) {
+  let orderPairs = [];
+  strng.split(" ").forEach(x => orderPairs.push([x, x.split("").reduce((acc, value) => acc + Number(value), 0)]))
+  return orderPairs.sort((a, b) => {
+      if (a[1] > b[1]) return 1;
+      if (a[1] < b[1]) return -1;
+      if (a[0] > b[0]) return 1;
+      if (a[0] < b[0]) return -1;
+    })
+    .map(x => x[0]).join(" ");
+}
+
+//Push all zeroes to the end of the array
+function moveZeros(arr) {
+  let temp = arr.filter(x => x !== 0);
+  while (temp.length < arr.length)
+    temp.push(0);
+  return temp;
+}
+
+//Sudoku board check
+function sudoku(){
+  function validSolution(board){
+    let squares = getSquares(board);
+    for (let x = 0; x < board.length; x++){
+      //0 Check
+      if (board[x].includes(0))
+        return false;
+      
+      //Row check
+      if (!unique(board[x]))
+        return false;
+      
+      //Column check
+      let column = [];
+      for (let y = 0; y < 9; y++)
+        column.push(board[x][y]);
+      if (!unique(column))
+        return false;
+      
+      //Squares check
+      if (!unique(squares[x]))
+        return false
+    }
+    return true;
+  }
+  
+  function unique(board){
+    return (new Set(board)).size == board.length;
+  }
+  
+  function getSquares(board){
+    let squares = [];
+    for (let rows = 0; rows < board.length; rows += 3){
+      for (let columns = 0; columns < board[rows].length; columns += 3){
+        let temp = [];
+        temp.push(...(board[rows].slice(columns, columns + 3)));
+        temp.push(...(board[rows + 1].slice(columns, columns + 3)));
+        temp.push(...(board[rows + 2].slice(columns, columns + 3)));
+        squares.push(temp);
+      }
+    }
+    return squares;
+  }
+}
+
+//Find amount of characters are duplicates in string regardless of case
+function duplicateCount(text){
+  let dictionary = {};
+  text.toLowerCase().split("").map(x => x in dictionary ? dictionary[x]++ : dictionary[x] = 0);
+  return Object.values(dictionary).filter(x => x > 0).length;
+}
+
+//Sort characters alphabetically and remove duplicate characters
+function longest(s1, s2) {
+  return [...new Set(s1+s2)].sort().join("");
+}
+
+//Cypher to encrypt and decrypt string by odd and even indexes
+function encrypt(text, n){
+  function cypher(text){
+    const split = text.split("");
+    return split.filter((x, index) => index % 2).join("") + split.filter((x, index) => !(index % 2)).join("");
+  }
+
+  if (text == null)
+    return text;
+  for (let i = 0 ; i < n; i++)
+    text = cypher(text);
+  return text;
+}
+
+function decrypt(encryptedText, n){
+  function decypher(text){
+    const split = encryptedText.split("");
+    const front = split.slice(0, Math.floor(split.length / 2));
+    const back = split.slice(Math.floor(split.length / 2), split.length);
+    let string = [];
+    for (let i = 0; i < front.length; i++){
+      string.push(back[i]);
+      string.push(front[i]);
+    }
+    if (back.length > front.length)
+      string.push(back[back.length - 1]);
+    return string.join("");
+  }
+
+  if (encryptedText == null)
+    return encryptedText;
+  for (let i = 0; i < n; i++)
+    encryptedText = decypher(encryptedText);
+  return encryptedText;
+}
+
+//Remove first and last character from string
+function removeChar(str) {
+  return str.slice(1, -1);
+}
+
+//Find two integers in array that add up to given number within time limit
+function sumPairs(ints, s) {
+  let cache = {};
+  for (let i = 0; i < ints.length; i++){
+    if (s - ints[i] in cache)
+      return [s - ints[i], ints[i]]
+    else
+      cache[ints[i]] = i;
+  }
+  return undefined
+}
+
+//Find weight of words, return word with highest weight
+function high(x){
+  let characters = x.split(" ");
+  let weight = x.split(" ").map(y => y.split("").reduce((acc, char) => acc + (char.charCodeAt(0) - 96), 0));
+  return characters[weight.indexOf(Math.max(...weight))];
+}
+
+//Categorizing each book by letter and total amount in stock
+function stockList(listOfArt, listOfCat){
+  if (listOfArt.length == 0)
+    return "";
+  let dictionary = {};
+  listOfArt.forEach(x => {
+    let split = x.split(" ");
+    split[0][0] in dictionary ? dictionary[split[0][0]] += Number(split[1]) : dictionary[split[0][0]] = Number(split[1]);
+  })
+  return listOfCat.map(x => `(${x} : ${x in dictionary ? dictionary[x] : 0})`).join(" - ")
+}
+
+//Cancel out NORTH/SOUTH and EAST/WEST in a given array
+function dirReduc(arr){
+  const OPPOSITE = {"NORTH":"SOUTH", "SOUTH":"NORTH", "WEST":"EAST", "EAST":"WEST"};
+  return arr.reduce((acc, direction) => {direction == OPPOSITE[acc.slice(-1)] ? acc.pop() : acc.push(direction); return acc}, []);
+}
+
+//Sum of a row of pyramid of odd numbers
+//          1
+//        3   5
+//      7   9   11
+//    13  15  17  19
+//  21  23  25  27  29
+//...
+
+//wELL PLAYED
+function rowSumOddNumbers(n) {
+  return Math.pow(n, 3);
+}
+
+//Max sum of subarray in a array problem
+//Look up Kadane's Algorithm
+//Dynamic programming
+var maxSequence = function(arr){
+  let localMax = 0;
+  let maxSum = 0;
+  for (let i = 0; i < arr.length; i++){
+    localMax = Math.max(arr[i], arr[i] + localMax);
+    if (localMax > maxSum)
+      maxSum = localMax;
+  }
+  return maxSum;
+}
+
+//Return 5 without using any numbers or math/
+//Wow this one was clever
+function unusualFive(){
+  return "smart".length;
+}
+
+//Rule of divisibility by 13
+function thirt(n) {
+  const ORDER = [1, 10, 9, 12, 3, 4];
+  const next = n.toString().split("").reverse().map(Number).reduce((acc, x, index) => acc + x * ORDER[index % 6], 0);
+  return next == n ? n : thirt(next);
+}
+
+//Convert to camelCase
+function toCamelCase(str){
+  let split = str.split(/[-_]+/);
+  for (let i = 1; i < split.length; i++){
+    let characters = split[i].split("");
+    characters[0] = characters[0].toUpperCase();
+    split[i] = characters.join("");
+  }
+  return split.join("");
+}
+
+//Valid parenthesis
+function validParentheses(parens) {
+  let count = 0;
+  for (let i = 0; i < parens.length; i++){
+    if (parens[i] == "(")
+      count++;
+    else 
+      count--;
+    if (count < 0)
+      return false;
+  }
+  return count == 0;
+}
+
+//Return squares that make up a rectangle
+function sqInRect(lng, wdth){
+  if (lng == wdth)
+    return null;
+  let total = [];
+  while (lng > 0 && wdth > 0){
+    total.push(Math.min(lng, wdth));
+    lng > wdth ? lng -= wdth : wdth -= lng;
+  }
+  return total;
+}
+
+//Valid IP Numbers
+function isValidIP(str) {
+  const VALUES = str.split(".");
+  console.log(VALUES);
+  //If there are only 4 numbers in the string seperated by periods
+  if (VALUES.length == 4)
+    //If every number only contains numbers (no letters)
+    if (VALUES.every(x => x.split("").every(character => character >= '0' && character <= '9')))
+      //If every number does not have leading 0's
+      if (VALUES.every(y => y == Number(y).toString()))
+        //Return true if the numbers are between 0 and 255 inclusive
+        return VALUES.every(z => Number(z) >= 0 && Number(z) <= 255);
+  //Otherwise by default return false
+  return false;
+}
+
+//Sort by last then first name
+function meeting(s) {
+  return s.split(";")
+    .map(x => x.toUpperCase())
+    .map(x => x.split(":"))
+    .sort((a, b) => {
+      if (a[1] > b[1]) return 1;
+      if (a[1] < b[1]) return -1;
+      if (a[0] > b[0]) return 1;
+      if (a[0] < b[0]) return -1;
+    })
+    .map(x => `(${x[1].toUpperCase()}, ${x[0].toUpperCase()})`)
+    .join("");
+}
+
+//RPN Calculator
+//Very clever use of switching order of pops on stack through number manipulation
+function calc(expr){
+  let numbers = [];
+  expr.split(" ").forEach(x => {
+    switch(x){
+        case '+':
+          numbers.push(numbers.pop() + numbers. pop());
+          break;
+        case '-':
+          numbers.push(-numbers.pop() + numbers.pop());
+          break;
+        case '*':
+          numbers.push(numbers.pop() * numbers.pop());
+          break;
+        case '/':
+          numbers.push(1 / (numbers.pop() / numbers.pop()));
+           break;
+        default:
+          numbers.push(Number(x));
+    }
+  })
+  return numbers.pop();
+}
+
+//Check to see how many cakes can be made with available ingredients and recipe
+function cakes(recipe, available){
+  if (Object.keys(recipe).every(x => x in available))
+    return Math.min(...Object.keys(recipe).map(x => Math.floor(available[x] / recipe[x])));
+  return 0;
+}
+
+//Generate a valid tweet given a sentence
+function generateHashtag (str){
+  if (str != ""){
+    let hashtag = "#" + str.split(" ").filter(x => x != "").map(x => x[0].toUpperCase() + x.slice(1)).join("");
+    if (hashtag.length > 1 && hashtag.length <= 140)
+      return hashtag;
+  }
+  return false;
+}
+
+//If string2 cannot be made from string1, return false
+function scramble(str1, str2) {
+  let dictionary = {};
+  for (let i = 0; i < str1.length; i++)
+    str1[i] in dictionary ? dictionary[str1[i]]++ : dictionary[str1[i]] = 1;
+  for (let i = 0; i < str2.length; i++)
+    if (!(--dictionary[str2[i]] >= 0))
+      return false;
+  return true;
+}
+
+//Formula for trailing zeroes in factorial
+function zeros (n) {
+  let total = 0;
+  for (let i = 5; Math.floor(n / i) >= 1; i *= 5)
+    total += Math.floor(n / i);
+  return total;
+}
