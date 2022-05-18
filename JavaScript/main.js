@@ -1,12 +1,3 @@
-//Remove extra number > n elements in an array without changing order
-function deleteNth(arr,n){
-  let cache = {};
-  return arr.filter(x =>{
-    cache[x] = (cache[x] || 0) + 1;
-    return cache[x] <= n;
-  })
-}
-
 //Sort by weight of a string number (add digits), and then by number alphabetically if weights are equal
 function orderWeight(strng) {
   let orderPairs = [];
