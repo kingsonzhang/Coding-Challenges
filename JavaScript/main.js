@@ -1,61 +1,3 @@
-//Sudoku board check
-function sudoku(){
-  function validSolution(board){
-    let squares = getSquares(board);
-    for (let x = 0; x < board.length; x++){
-      //0 Check
-      if (board[x].includes(0))
-        return false;
-      
-      //Row check
-      if (!unique(board[x]))
-        return false;
-      
-      //Column check
-      let column = [];
-      for (let y = 0; y < 9; y++)
-        column.push(board[x][y]);
-      if (!unique(column))
-        return false;
-      
-      //Squares check
-      if (!unique(squares[x]))
-        return false
-    }
-    return true;
-  }
-  
-  function unique(board){
-    return (new Set(board)).size == board.length;
-  }
-  
-  function getSquares(board){
-    let squares = [];
-    for (let rows = 0; rows < board.length; rows += 3){
-      for (let columns = 0; columns < board[rows].length; columns += 3){
-        let temp = [];
-        temp.push(...(board[rows].slice(columns, columns + 3)));
-        temp.push(...(board[rows + 1].slice(columns, columns + 3)));
-        temp.push(...(board[rows + 2].slice(columns, columns + 3)));
-        squares.push(temp);
-      }
-    }
-    return squares;
-  }
-}
-
-//Find amount of characters are duplicates in string regardless of case
-function duplicateCount(text){
-  let dictionary = {};
-  text.toLowerCase().split("").map(x => x in dictionary ? dictionary[x]++ : dictionary[x] = 0);
-  return Object.values(dictionary).filter(x => x > 0).length;
-}
-
-//Sort characters alphabetically and remove duplicate characters
-function longest(s1, s2) {
-  return [...new Set(s1+s2)].sort().join("");
-}
-
 //Cypher to encrypt and decrypt string by odd and even indexes
 function encrypt(text, n){
   function cypher(text){
@@ -90,23 +32,6 @@ function decrypt(encryptedText, n){
   for (let i = 0; i < n; i++)
     encryptedText = decypher(encryptedText);
   return encryptedText;
-}
-
-//Remove first and last character from string
-function removeChar(str) {
-  return str.slice(1, -1);
-}
-
-//Find two integers in array that add up to given number within time limit
-function sumPairs(ints, s) {
-  let cache = {};
-  for (let i = 0; i < ints.length; i++){
-    if (s - ints[i] in cache)
-      return [s - ints[i], ints[i]]
-    else
-      cache[ints[i]] = i;
-  }
-  return undefined
 }
 
 //Find weight of words, return word with highest weight
