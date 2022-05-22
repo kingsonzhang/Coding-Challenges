@@ -59,19 +59,6 @@ function dirReduc(arr){
   return arr.reduce((acc, direction) => {direction == OPPOSITE[acc.slice(-1)] ? acc.pop() : acc.push(direction); return acc}, []);
 }
 
-//Sum of a row of pyramid of odd numbers
-//          1
-//        3   5
-//      7   9   11
-//    13  15  17  19
-//  21  23  25  27  29
-//...
-
-//wELL PLAYED
-function rowSumOddNumbers(n) {
-  return Math.pow(n, 3);
-}
-
 //Max sum of subarray in a array problem
 //Look up Kadane's Algorithm
 //Dynamic programming
