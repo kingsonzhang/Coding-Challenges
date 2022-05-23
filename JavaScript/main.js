@@ -34,25 +34,6 @@ function decrypt(encryptedText, n){
   return encryptedText;
 }
 
-//Find weight of words, return word with highest weight
-function high(x){
-  let characters = x.split(" ");
-  let weight = x.split(" ").map(y => y.split("").reduce((acc, char) => acc + (char.charCodeAt(0) - 96), 0));
-  return characters[weight.indexOf(Math.max(...weight))];
-}
-
-//Categorizing each book by letter and total amount in stock
-function stockList(listOfArt, listOfCat){
-  if (listOfArt.length == 0)
-    return "";
-  let dictionary = {};
-  listOfArt.forEach(x => {
-    let split = x.split(" ");
-    split[0][0] in dictionary ? dictionary[split[0][0]] += Number(split[1]) : dictionary[split[0][0]] = Number(split[1]);
-  })
-  return listOfCat.map(x => `(${x} : ${x in dictionary ? dictionary[x] : 0})`).join(" - ")
-}
-
 //Cancel out NORTH/SOUTH and EAST/WEST in a given array
 function dirReduc(arr){
   const OPPOSITE = {"NORTH":"SOUTH", "SOUTH":"NORTH", "WEST":"EAST", "EAST":"WEST"};
