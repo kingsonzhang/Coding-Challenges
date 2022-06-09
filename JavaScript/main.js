@@ -4,20 +4,6 @@ function dirReduc(arr){
   return arr.reduce((acc, direction) => {direction == OPPOSITE[acc.slice(-1)] ? acc.pop() : acc.push(direction); return acc}, []);
 }
 
-//Max sum of subarray in a array problem
-//Look up Kadane's Algorithm
-//Dynamic programming
-var maxSequence = function(arr){
-  let localMax = 0;
-  let maxSum = 0;
-  for (let i = 0; i < arr.length; i++){
-    localMax = Math.max(arr[i], arr[i] + localMax);
-    if (localMax > maxSum)
-      maxSum = localMax;
-  }
-  return maxSum;
-}
-
 //Return 5 without using any numbers or math/
 //Wow this one was clever
 function unusualFive(){
