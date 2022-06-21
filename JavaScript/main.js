@@ -17,31 +17,6 @@ function thirt(n) {
   return next == n ? n : thirt(next);
 }
 
-//Convert to camelCase
-function toCamelCase(str){
-  let split = str.split(/[-_]+/);
-  for (let i = 1; i < split.length; i++){
-    let characters = split[i].split("");
-    characters[0] = characters[0].toUpperCase();
-    split[i] = characters.join("");
-  }
-  return split.join("");
-}
-
-//Valid parenthesis
-function validParentheses(parens) {
-  let count = 0;
-  for (let i = 0; i < parens.length; i++){
-    if (parens[i] == "(")
-      count++;
-    else 
-      count--;
-    if (count < 0)
-      return false;
-  }
-  return count == 0;
-}
-
 //Return squares that make up a rectangle
 function sqInRect(lng, wdth){
   if (lng == wdth)
